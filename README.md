@@ -19,3 +19,7 @@ containers:
 - `app`: powershell script that logs both to a log file and an event log on a loop
 - `winlogbeat`: winlogbeat container that tries to read from mounted `evtx` event log files from `app`, outputs to console
 - `filebeat`: example filebeat container that successfully reads from mounted `.log` file from `app`, outputs to console
+
+# notes
+
+this follows an [example in the winlogbeat FAQs](https://www.elastic.co/guide/en/beats/winlogbeat/current/reading-from-evtx.html) for reading from `.evtx`, though in that case winlogbeat reads from archived `.evtx` files, hence no lock conflict
