@@ -1,0 +1,10 @@
+# source event logs from the shared volume to which event logs on our app container are mounted
+winlogbeat.event_logs:
+  - name: C:\\eventlogs\\Application.evtx
+
+# log winlogbeat transactions to console
+output.console:
+  pretty: true
+
+# log winlogbeat logs to console
+logging.to_stderr: true

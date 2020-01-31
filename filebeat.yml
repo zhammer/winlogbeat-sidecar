@@ -1,0 +1,10 @@
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - C:\\logs\\app.log
+
+output.console:
+  pretty: true
+
+logging.to_stderr: true

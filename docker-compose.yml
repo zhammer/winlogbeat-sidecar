@@ -1,0 +1,36 @@
+version: '3.7'
+
+services:
+  app:
+    image: mcr.microsoft.com/windows/servercore/iis:windowsservercore-ltsc2019
+    volumes:
+      - ".:C:\\config:ro"
+      - "eventlogs:C:\\Windows\\System32\\winevt\\Logs"
+      - "logs:C:\\logs"
+    entrypoint: 'C:\\config\\app.ps1'
+  winlogbeat:
+    build:
+      context: .
+      args:
+        BEAT: winlogbeat
+        VERSION: 7.5.2
+    entrypoint: 'winlogbeat.exe -c C:\\config\\winlogbeat.yml'
+    volumes:
+      - ".:C:\\config:ro"
+      - "eventlogs:C:\\eventlogs:ro"
+  filebeat:
+    build:
+      context: .
+      args:
+        BEAT: filebeat
+        VERSION: 7.5.2
+    entrypoint: 'filebeat.exe -c C:\\config\\filebeat.yml'
+    volumes:
+      - ".:C:\\config:ro"
+      - "logs:C:\\logs:ro"
+
+volumes:
+  # volume to which app writes event logs and from which winlogbeat reads eventlogs
+  eventlogs:
+  # volume to which app writes logs and from which filebeat reads logs
+  logs:
